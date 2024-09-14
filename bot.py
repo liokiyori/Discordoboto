@@ -8,11 +8,21 @@ load_dotenv()
 discord_token = os.getenv('Discord_token')
 client = commands.Bot(command_prefix = '!', intents=discord.Intents.all())
 
+async def change_status():
+    await client.change_presence(activity=discord.Game(name="!help"))
+
 @client.event
 async def on_ready():
     print('Bot is ready.')
-@client.command()
+    await change_status()
+
+@client.command(aliases=["pang","pung"])
 async def ping(ctx):
     await ctx.send(f'Pong! {round(client.latency * 1000)}ms')    
+
+@client.command(aliases=["nique", "nique ta mère"])
+async def clear(ctx, amount=2):
+    await ctx.channel.purge(limit=amount)
+
 
 client.run(discord_token)
