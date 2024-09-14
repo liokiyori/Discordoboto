@@ -2,6 +2,9 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+import asyncio
+from cogs.minigames import minigames
+
 
 load_dotenv()
 
@@ -15,6 +18,7 @@ async def change_status():
 async def on_ready():
     print('Bot is ready.')
     await change_status()
+    await client.load_extension('cogs.minigames')
 
 @client.command(aliases=["pang","pung"])
 async def ping(ctx):
